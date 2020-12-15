@@ -1,11 +1,11 @@
 import GitHubCommitTable from './github/GitHubCommitTable';
+import GitHubRepositoryTable from './github/GitHubRepositoryTable';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <GitHubCommitTable username="torvalds" repositoryName="linux" />
-      <GitHubCommitTable username="torvalds" repositoryName="libdc-for-dirk" />
+      <GitHubRepositoryTable username="torvalds" />
     </div>
   );
 }

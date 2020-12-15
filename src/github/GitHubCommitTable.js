@@ -1,5 +1,6 @@
 import {Component} from 'react';
 import GitHubApi from './GitHubApi';
+import GitHubCommitTableRow from './GitHubCommitTableRow';
 import './GitHubCommitTable.css';
 
 export default class GitHubCommitTable extends Component {
@@ -13,7 +14,8 @@ export default class GitHubCommitTable extends Component {
     }
 
     componentDidMount = async () => {
-        const commits = await this.api.getLatestCommits('torvalds', 'linux');
+        const {username, repositoryName} = this.props;
+        const commits = await this.api.getLatestCommits(username, repositoryName);
         this.setState({
             commits
         });
@@ -22,7 +24,7 @@ export default class GitHubCommitTable extends Component {
     render = () => {
         return (
             <div id="github-commit-table-cnt">
-                <h2>GitHub Commits</h2>
+                <h2>GitHub Commits for {this.props.repositoryName}</h2>
                 <table id="github-commit-table">
                     <thead>
                         <tr>
@@ -33,13 +35,7 @@ export default class GitHubCommitTable extends Component {
                     </thead>
                     <tbody>
                         {this.state.commits.map(commit => {
-                            return (
-                                <tr key={commit.sha}>
-                                    <td><img src={this.api.getAvatarURL(commit.author.username)} /></td>
-                                    <td>{commit.author.name} ({commit.author.username})</td>
-                                    <td>{commit.message}</td>
-                                </tr>
-                            );
+                            return (<GitHubCommitTableRow key={commit.sha} commit={commit} />);
                         })}
                     </tbody>
                 </table>

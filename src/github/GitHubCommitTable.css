@@ -1,0 +1,11 @@
+table#github-commit-table {
+    border: 1px solid black;
+}
+
+table#github-commit-table td {
+    border: 1px solid black;
+}
+
+table#github-commit-table img {
+    width: 50px;
+}

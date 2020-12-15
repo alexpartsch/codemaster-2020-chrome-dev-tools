@@ -1,3 +1,5 @@
+import {GitHubRepository, GitHubCommit} from './GitHubModel';
+
 export default class GitHubApi {
 
     getPublicRepositories = async (username) => {
@@ -12,11 +14,7 @@ export default class GitHubApi {
 
         return responseBody.map(repo => {
             const {name, html_url, description} = repo;
-            return {
-                name,
-                html_url,
-                description
-            };
+            return new GitHubRepository(name, html_url, description);
         });
     };
 
@@ -30,16 +28,7 @@ export default class GitHubApi {
         const responseBody = await response.json();
         console.log(`Parsed Response Body from GitHub Commits: ${responseBody.length}`);
 
-        return responseBody.map(commitRef => {
-            const {sha,commit,committer} = commitRef;
-            const {author,message} = commit;
-            author.username = committer.login;
-            return {
-                sha,
-                author,
-                message: `${message.slice(0, 250)}...`
-            };
-        });
+        return responseBody.map(commitRef => new GitHubCommit(commitRef));
     };
 
     getAvatarURL = (username) => {

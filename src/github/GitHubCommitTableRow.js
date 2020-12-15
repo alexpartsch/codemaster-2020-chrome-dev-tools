@@ -12,9 +12,9 @@ export default class GitHubCommitTableRow extends Component {
         const {commit} = this.props;
         return (
             <tr>
-                <td><img src={this.api.getAvatarURL(commit.author.username)} /></td>
-                <td>{commit.author.name} ({commit.author.username})</td>
-                <td>{commit.message}</td>
+                <td><img src={this.api.getAvatarURL(commit.getAuthor().getUsername())} /></td>
+                <td>{commit.getAuthor().getName()} ({commit.getAuthor().getUsername()})</td>
+                <td>{commit.getMessageSummary()}</td>
             </tr>
         );
     };

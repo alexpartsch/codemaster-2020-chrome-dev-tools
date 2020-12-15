@@ -6,8 +6,8 @@ function GitHubRepositoryTableRow(props) {
 
     return (
         <tr>
-            <td><a href={repo.html_url}>{repo.name}</a></td>
-            <td>{repo.description}</td>
+            <td><a href={repo.getUrl()}>{repo.getName()}</a></td>
+            <td>{repo.getDescription()}</td>
         </tr>
     );
 }

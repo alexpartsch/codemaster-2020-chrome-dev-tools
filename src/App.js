@@ -1,13 +1,32 @@
+import {Component} from 'react';
 import GitHubCommitTable from './github/GitHubCommitTable';
 import GitHubRepositoryTable from './github/GitHubRepositoryTable';
+import TextInputDialog from './TextInputDialog';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <GitHubRepositoryTable username="torvalds" />
-    </div>
-  );
-}
+export default class App extends Component {
 
-export default App;
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: 'torvalds'
+    };
+  }
+
+  setNewUsername = (username) => {
+    this.setState(
+      {
+        username
+      });
+  };
+
+  render = () => {
+    return (
+      <div className="App">
+        <TextInputDialog onTextChange={this.setNewUsername} />
+        <GitHubRepositoryTable key={this.state.username} username={this.state.username} />
+      </div>
+    );
+  }
+
+}

@@ -35,7 +35,7 @@ export default class GitHubCommitTable extends Component {
                     </thead>
                     <tbody>
                         {this.state.commits.map(commit => {
-                            return (<GitHubCommitTableRow key={commit.sha} commit={commit} />);
+                            return (<GitHubCommitTableRow key={commit.getSha()} commit={commit} />);
                         })}
                     </tbody>
                 </table>

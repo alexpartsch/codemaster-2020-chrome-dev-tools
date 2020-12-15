@@ -1,5 +1,6 @@
 import {Component} from 'react';
 import GitHubApi from './GitHubApi';
+import './GitHubRepositoryTable.css';
 
 function GitHubRepositoryTableRow(props) {
     const {repo} = props;
@@ -18,14 +19,22 @@ export default class GitHubRepositoryTable extends Component {
         super(props);
         this.api = new GitHubApi();
         this.state = {
-            repos: []
+            repos: [],
+            error: ''
         };
     }
 
     componentDidMount = async () => {
-        const {username} = this.props;
-        const repos = await this.api.getPublicRepositories(username);
-        this.setState({repos});
+        try {
+            const {username} = this.props;
+            const repos = await this.api.getPublicRepositories(username);
+            this.setState({repos});
+        } catch (e) {
+            this.setState({
+                repos: [],
+                error: e
+            });
+        }
     };
 
     render = () => {
@@ -33,6 +42,7 @@ export default class GitHubRepositoryTable extends Component {
         return (
             <div id="github-repo-table-cnt">
                 <h2>Public Repositories for User {username}</h2>
+                <h2 className="error">{this.state.error}</h2>
                 <table id="github-repo-table">
                     <thead>
                         <tr>
@@ -42,7 +52,7 @@ export default class GitHubRepositoryTable extends Component {
                     </thead>
                     <tbody>
                         {this.state.repos.map(repo => {
-                            return (<GitHubRepositoryTableRow repo={repo} />);
+                            return (<GitHubRepositoryTableRow key={repo.getName()} repo={repo} />);
                         })}
                     </tbody>
                 </table>

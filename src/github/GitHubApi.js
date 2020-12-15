@@ -9,13 +9,18 @@ export default class GitHubApi {
         const response = await fetch(url);
         console.log(`Receives Response from GitHub: ${response.status}`);
 
-        const responseBody = await response.json();
-        console.log(`Parsed Response Body from GitHub Repos: ${responseBody.length}`);
+        if(response.status === 200) {
+            const responseBody = await response.json();
+            console.log(`Parsed Response Body from GitHub Repos: ${responseBody.length}`);
 
-        return responseBody.map(repo => {
-            const {name, html_url, description} = repo;
-            return new GitHubRepository(name, html_url, description);
-        });
+            return responseBody.map(repo => {
+                const {name, html_url, description} = repo;
+                return new GitHubRepository(name, html_url, description);
+            });
+        } else {
+            console.log(`Received Error Response!`);
+            throw 'This user does not exist!';
+        }
     };
 
     getLatestCommits = async (username, repositoryName) => {

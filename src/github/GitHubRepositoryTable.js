@@ -1,6 +1,17 @@
 import {Component} from 'react';
 import GitHubApi from './GitHubApi';
 
+function GitHubRepositoryTableRow(props) {
+    const {repo} = props;
+
+    return (
+        <tr>
+            <td><a href={repo.html_url}>{repo.name}</a></td>
+            <td>{repo.description}</td>
+        </tr>
+    );
+}
+
 export default class GitHubRepositoryTable extends Component {
 
     constructor(props) {
@@ -31,12 +42,7 @@ export default class GitHubRepositoryTable extends Component {
                     </thead>
                     <tbody>
                         {this.state.repos.map(repo => {
-                            return (
-                                <tr>
-                                    <td><a href={repo.html_url}>{repo.name}</a></td>
-                                    <td>{repo.description}</td>
-                                </tr>
-                            );
+                            return (<GitHubRepositoryTableRow repo={repo} />);
                         })}
                     </tbody>
                 </table>

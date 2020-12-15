@@ -16,14 +16,24 @@ export default class App extends Component {
   setNewUsername = (username) => {
     this.setState(
       {
-        username
+        username,
+        repositoryName: this.state.repositoryName
+      });
+  };
+
+  setNewRepository = (repositoryName) => {
+    this.setState(
+      {
+        repositoryName,
+        username: this.state.username
       });
   };
 
   render = () => {
     return (
       <div className="App">
-        <TextInputDialog onTextChange={this.setNewUsername} />
+        <TextInputDialog label="Username" onTextChange={this.setNewUsername} />
+        <TextInputDialog label="Repository" onTextChange={this.setNewRepository} />
         <GitHubRepositoryTable key={this.state.username} username={this.state.username} />
       </div>
     );

@@ -19,6 +19,7 @@ export default class TextInputDialog extends Component {
     render = () => {
         return (
             <div>
+                <p>{this.props.label}:</p>
                 <input type="text" value={this.state.textInput} onChange={this.onInputChanged} />
                 <button onClick={() => this.props.onTextChange(this.state.textInput)}>Confirm</button>
             </div>
